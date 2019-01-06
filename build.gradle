@@ -76,7 +76,7 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 curseforge {
 	apiKey = project.findProperty("curseforge_key")
 	project {
-		id = "10694"
+		id = "310694"
 		releaseType = "release"
 		addGameVersion "${minecraft_version}"
 		mainArtifact(jar) {
