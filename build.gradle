@@ -41,7 +41,9 @@ minecraft {
 }
 
 dependencies {
-	deobfCompile "com.mjr.mjrlegendslib:MJRLegendsLib:${version_mjrlegendslib}:dev"
+	compile files (
+		"MJRLegendsLib-1.12.2-1.1.7-dev.jar"
+	)
 }
 
 processResources {
