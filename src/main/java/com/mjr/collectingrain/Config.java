@@ -11,7 +11,7 @@ public class Config {
 		Configuration config = new Configuration(new File("config/CollectingRain.cfg"));
 		config.load();
 
-		mbPerTick = config.get(Configuration.CATEGORY_GENERAL, "Amount of mb gained per tick", false, "Default: 1").getDouble(1.0);
+		mbPerTick = config.get(Configuration.CATEGORY_GENERAL, "Amount of mb gained per tick", 1.0, "Default: 1").getDouble(1.0);
 
 		config.save();
 	}
