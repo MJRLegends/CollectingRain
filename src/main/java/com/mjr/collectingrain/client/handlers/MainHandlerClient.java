@@ -61,7 +61,7 @@ public class MainHandlerClient {
 				stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.STATS_CLIENT_CAPABILITY, null);
 			}
 			if (minecraft.currentScreen == null && player.getEntityWorld().getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())
-					&& (player.getHeldItemMainhand().getItem() instanceof ItemBucket || player.getHeldItemOffhand().getItem() instanceof ItemBucket)) {
+					&& ((player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemBucket) || (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof ItemBucket))) {
 				OverlayRainCollection.renderOverlay();
 			}
 		}
