@@ -59,7 +59,7 @@ public class MainHandlerServer {
 						if (stats.getRainAmount() >= 100) {
 							ItemStack itemSlack = event.player.getHeldItemOffhand();
 							itemSlack = new ItemStack(Items.WATER_BUCKET);
-							event.player.setHeldItem(EnumHand.MAIN_HAND, itemSlack);
+							event.player.setHeldItem(EnumHand.OFF_HAND, itemSlack);
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
