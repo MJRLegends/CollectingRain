@@ -33,9 +33,9 @@ public class OverlayRainCollection extends Overlay {
 		String text = "Water Bucket Filled amount" + ": " + (int) stats.getRainAmount() + "%";
 
 		GL11.glScalef(1.0F, 1.0F, 1.0F);
-		int w = (scaledresolution.getScaledWidth() - OverlayRainCollection.minecraft.fontRenderer.getStringWidth(text)) / 2;
+		int w = (scaledresolution.getScaledWidth() - OverlayRainCollection.minecraft.fontRendererObj.getStringWidth(text)) / 2;
 		int h = scaledresolution.getScaledHeight() - 31 - 18;
-		OverlayRainCollection.minecraft.fontRenderer.drawString(text, w, h, ClientUtilities.to32BitColor(255, 255, 255, 255));
+		OverlayRainCollection.minecraft.fontRendererObj.drawString(text, w, h, ClientUtilities.to32BitColor(255, 255, 255, 255));
 
 		GL11.glPopMatrix();
 	}
