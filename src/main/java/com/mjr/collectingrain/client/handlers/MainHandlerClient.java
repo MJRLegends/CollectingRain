@@ -38,7 +38,7 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	public void onClientTick(ClientTickEvent event) {
 		final Minecraft minecraft = MCUtilities.getClient();
-		final WorldClient world = minecraft.world;
+		final WorldClient world = minecraft.theWorld;
 
 		if (event.phase == Phase.END) {
 			if (world != null) {
@@ -52,9 +52,9 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	public void onRenderTick(RenderTickEvent event) {
 		final Minecraft minecraft = MCUtilities.getClient();
-		final EntityPlayerSP player = minecraft.player;
+		final EntityPlayerSP player = minecraft.thePlayer;
 		final EntityPlayerSP playerBaseClient = PlayerUtilties.getPlayerBaseClientFromPlayer(player, false);
-		if (player != null && player.world.getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())) {
+		if (player != null && player.worldObj.getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())) {
 			IStatsClientCapability stats = null;
 
 			if (player != null) {

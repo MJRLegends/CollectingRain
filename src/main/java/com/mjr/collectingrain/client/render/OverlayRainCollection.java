@@ -26,8 +26,8 @@ public class OverlayRainCollection extends Overlay {
 		GL11.glPushMatrix();
 
 		IStatsClientCapability stats = null;
-		if (minecraft.player != null) {
-			EntityPlayerSP playerBaseClient = minecraft.player;
+		if (minecraft.thePlayer != null) {
+			EntityPlayerSP playerBaseClient = minecraft.thePlayer;
 			stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.STATS_CLIENT_CAPABILITY, null);
 		}
 		String text = "Water Bucket Filled amount" + ": " + (int) stats.getRainAmount() + "%";

@@ -96,14 +96,14 @@ public class MainHandlerServer {
 	public void onPlayerCloned(PlayerEvent.Clone event) {
 		IStatsCapability oldStats = event.getOriginal().getCapability(CapabilityStatsHandler.STATS_CAPABILITY, null);
 		IStatsCapability newStats = event.getEntityPlayer().getCapability(CapabilityStatsHandler.STATS_CAPABILITY, null);
-		newStats.copyFrom(oldStats, !event.isWasDeath() || event.getOriginal().world.getGameRules().getBoolean("keepInventory"));
+		newStats.copyFrom(oldStats, !event.isWasDeath() || event.getOriginal().worldObj.getGameRules().getBoolean("keepInventory"));
 	}
 
 	@SubscribeEvent
 	public void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayerMP) {
 			event.addCapability(CapabilityStatsHandler.PLAYER_PROP, new CapabilityProviderStats((EntityPlayerMP) event.getObject()));
-		} else if (event.getObject() instanceof EntityPlayer && ((EntityPlayer) event.getObject()).world.isRemote) {
+		} else if (event.getObject() instanceof EntityPlayer && ((EntityPlayer) event.getObject()).worldObj.isRemote) {
 			this.onAttachCapabilityClient(event);
 		}
 	}
@@ -134,6 +134,6 @@ public class MainHandlerServer {
 	}
 
 	protected void sendRainClientUpdatePacket(EntityPlayerMP player, IStatsCapability stats) {
-		CollectingRain.packetPipeline.sendTo(new PacketSimpleEP(EnumSimplePacket.C_UPDATE_RAIN_AMOUNT_LEVEL, player.world.provider.getDimension(), new Object[] { stats.getRainAmount() }), player);
+		CollectingRain.packetPipeline.sendTo(new PacketSimpleEP(EnumSimplePacket.C_UPDATE_RAIN_AMOUNT_LEVEL, player.worldObj.provider.getDimension(), new Object[] { stats.getRainAmount() }), player);
 	}
 }

@@ -17,10 +17,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = CollectingRain.MODID, version = CollectingRain.VERSION, dependencies = "required-after:forge@[13.20.1.2513,); required-after:mjrlegendslib@[1.11.2-1.1.4,);", certificateFingerprint = "b02331787272ec3515ebe63ecdeea0d746653468")
+@Mod(modid = CollectingRain.MODID, version = CollectingRain.VERSION, dependencies = "required-after:Forge@[12.18.3.2239,); required-after:mjrlegendslib@[1.10.2-1.1.4,);", certificateFingerprint = "b02331787272ec3515ebe63ecdeea0d746653468")
 public class CollectingRain {
 	public static final String MODID = "collectingrain";
-	public static final String VERSION = "1.11.2-1.0.0";
+	public static final String VERSION = "1.10.2-1.0.0";
 
 	@SidedProxy(clientSide = "com.mjr.collectingrain.proxy.ClientProxy", serverSide = "com.mjr.collectingrain.proxy.CommonProxy")
 	public static CommonProxy proxy;
