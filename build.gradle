@@ -1,5 +1,5 @@
 def minecraft_version="1.11.2"
-def version_mjrlegendslib="1.11.2-1.1.3"
+def version_mjrlegendslib="1.11.2-1.1.4"
 
 buildscript {
     repositories {
