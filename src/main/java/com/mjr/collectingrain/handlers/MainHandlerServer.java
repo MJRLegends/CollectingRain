@@ -52,10 +52,10 @@ public class MainHandlerServer {
 							ItemStack itemStack = event.player.getHeldItemMainhand();
 							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
 							ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
-							if(itemStack.getCount() != 1)
-								itemStack.setCount(itemStack.getCount() - 1);
+							if(itemStack.stackSize != 1)
+								itemStack.stackSize = itemStack.stackSize - 1;
 							else
-								event.player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+								event.player.setHeldItem(EnumHand.MAIN_HAND, null);
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
@@ -65,10 +65,10 @@ public class MainHandlerServer {
 							ItemStack itemStack = event.player.getHeldItemOffhand();
 							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
 							ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
-							if(itemStack.getCount() != 1)
-								itemStack.setCount(itemStack.getCount() - 1);
+							if(itemStack.stackSize != 1)
+								itemStack.stackSize = itemStack.stackSize - 1;
 							else
-								event.player.setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
+								event.player.setHeldItem(EnumHand.OFF_HAND, null);
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
