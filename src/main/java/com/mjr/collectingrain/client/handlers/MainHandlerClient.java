@@ -8,6 +8,7 @@ import com.mjr.collectingrain.client.handlers.capabilities.IStatsClientCapabilit
 import com.mjr.collectingrain.client.render.OverlayRainCollection;
 import com.mjr.collectingrain.network.PacketHandler;
 import com.mjr.mjrlegendslib.util.MCUtilities;
+import com.mjr.mjrlegendslib.util.PlayerClientUtilties;
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 
 import net.minecraft.client.Minecraft;
@@ -53,7 +54,7 @@ public class MainHandlerClient {
 	public void onRenderTick(RenderTickEvent event) {
 		final Minecraft minecraft = MCUtilities.getClient();
 		final EntityPlayerSP player = minecraft.thePlayer;
-		final EntityPlayerSP playerBaseClient = PlayerUtilties.getPlayerBaseClientFromPlayer(player, false);
+		final EntityPlayerSP playerBaseClient = PlayerClientUtilties.getPlayerBaseClientFromPlayer(player, false);
 		if (player != null && player.worldObj.getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())) {
 			IStatsClientCapability stats = null;
 
