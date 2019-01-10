@@ -1,0 +1,21 @@
+﻿========================================Not Released Updates==========================================
+
+======================================================================================================
+
+
+
+===========================================Released Updates===========================================
+v1.0.3
+*Tweaks to match MJRLegendsLib changes
+*Fixed issue with stacked buckets being removed
+*Set minimum version of MJRLegendsLib requirement to v1.1.8
+
+v1.0.2
+*Fixed bucket dupe with off hand
+
+v1.0.1
+*Fixed config option issue with being the wrong data type
+
+v1.0.0
+*First Release
+======================================================================================================
