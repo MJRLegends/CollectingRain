@@ -34,6 +34,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class MainHandlerServer {
 	private static List<PacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
@@ -48,18 +49,26 @@ public class MainHandlerServer {
 				if (stats != null) {
 					if (event.player.getHeldItemMainhand() != null && event.player.getHeldItemMainhand().getItem() instanceof ItemBucket && !event.player.getHeldItemMainhand().getItem().equals(Items.WATER_BUCKET)) {
 						if (stats.getRainAmount() >= 100) {
-							ItemStack itemSlack = event.player.getHeldItemMainhand();
-							itemSlack = new ItemStack(Items.WATER_BUCKET);
-							event.player.setHeldItem(EnumHand.MAIN_HAND, itemSlack);
+							ItemStack itemStack = event.player.getHeldItemMainhand();
+							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
+							ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
+							if(itemStack.getCount() != 1)
+								itemStack.setCount(itemStack.getCount() - 1);
+							else
+								event.player.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
 						}
 					} else if (event.player.getHeldItemOffhand() != null && event.player.getHeldItemOffhand().getItem() instanceof ItemBucket && !event.player.getHeldItemOffhand().getItem().equals(Items.WATER_BUCKET)) {
 						if (stats.getRainAmount() >= 100) {
-							ItemStack itemSlack = event.player.getHeldItemOffhand();
-							itemSlack = new ItemStack(Items.WATER_BUCKET);
-							event.player.setHeldItem(EnumHand.OFF_HAND, itemSlack);
+							ItemStack itemStack = event.player.getHeldItemOffhand();
+							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
+							ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
+							if(itemStack.getCount() != 1)
+								itemStack.setCount(itemStack.getCount() - 1);
+							else
+								event.player.setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
