@@ -1,0 +1,19 @@
+﻿========================================Not Released Updates==========================================
+
+======================================================================================================
+
+
+
+===========================================Released Updates===========================================
+v1.0.2
+*Tweaks to match MJRLegendsLib changes
+*Fixed issue with stacked buckets being removed
+*Set minimum version of MJRLegendsLib requirement to v1.1.5
+
+v1.0.1
+*Fixed null pointer crash
+*Fixed bucket dupe with off hand
+
+v1.0.0
+*Backport of 1.11.2-v1.0.0 to MC 1.10.2
+======================================================================================================
