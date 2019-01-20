@@ -8,6 +8,12 @@ import com.mjr.collectingrain.proxy.CommonProxy;
 import com.mjr.mjrlegendslib.util.MessageUtilities;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -54,5 +60,30 @@ public class CollectingRain {
 	@EventHandler
 	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
 		MessageUtilities.fatalErrorMessageToLog(MODID, "Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been tampered with. This version will NOT be supported!");
+	}
+
+	public static boolean isSupportedBucket(ItemStack stack) {
+		if(stack == null)
+			return false;
+		if(stack.getItem().equals(Items.BUCKET))
+			return true;
+		if(stack.getItem().getRegistryName().toString().equalsIgnoreCase("ceramics:clay_bucket") && stack.getTagCompound() == null)
+			return true;
+		return false;		
+	}
+	
+	public static ItemStack getWaterBucket(ItemStack stack) {
+		if(stack.getItem().equals(Items.BUCKET))
+			return new ItemStack(Items.WATER_BUCKET);
+		if(stack.getItem().getRegistryName().toString().equalsIgnoreCase("ceramics:clay_bucket")) {
+			NBTTagCompound tags = stack.getTagCompound();
+			if(tags == null) {
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setTag("fluids", new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME).writeToNBT(new NBTTagCompound()));
+				stack.setTagCompound(tag);
+				return stack;
+			}
+		}
+		return null;
 	}
 }

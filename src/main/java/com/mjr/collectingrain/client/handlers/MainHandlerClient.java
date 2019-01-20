@@ -3,6 +3,7 @@ package com.mjr.collectingrain.client.handlers;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.mjr.collectingrain.CollectingRain;
 import com.mjr.collectingrain.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.collectingrain.client.handlers.capabilities.IStatsClientCapability;
 import com.mjr.collectingrain.client.render.OverlayRainCollection;
@@ -13,8 +14,6 @@ import com.mjr.mjrlegendslib.util.PlayerClientUtilties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemBucket;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -62,9 +61,9 @@ public class MainHandlerClient {
 				stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.STATS_CLIENT_CAPABILITY, null);
 			}
 			if (minecraft.currentScreen == null && player.getEntityWorld().getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())) {
-				if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemBucket && player.getHeldItemMainhand().getItem().equals(Items.BUCKET))
+				if (CollectingRain.isSupportedBucket(player.getHeldItemMainhand()))
 					OverlayRainCollection.renderOverlay();
-				if (player.getHeldItemMainhand() != null && player.getHeldItemOffhand().getItem() instanceof ItemBucket && player.getHeldItemOffhand().getItem().equals(Items.BUCKET))
+				if (CollectingRain.isSupportedBucket(player.getHeldItemOffhand()))
 					OverlayRainCollection.renderOverlay();
 			}
 		}

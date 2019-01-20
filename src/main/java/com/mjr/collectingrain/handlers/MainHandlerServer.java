@@ -19,8 +19,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.WorldServer;
@@ -47,28 +45,32 @@ public class MainHandlerServer {
 			if (event.player != null) {
 				stats = event.player.getCapability(CapabilityStatsHandler.STATS_CAPABILITY, null);
 				if (stats != null) {
-					if (event.player.getHeldItemMainhand() != null && event.player.getHeldItemMainhand().getItem() instanceof ItemBucket && event.player.getHeldItemMainhand().getItem().equals(Items.BUCKET)) {
+					if (CollectingRain.isSupportedBucket(event.player.getHeldItemMainhand())) {
 						if (stats.getRainAmount() >= 100) {
 							ItemStack itemStack = event.player.getHeldItemMainhand();
-							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
-							ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
-							if(itemStack.stackSize != 1)
-								itemStack.stackSize = itemStack.stackSize - 1;
-							else
-								event.player.setHeldItem(EnumHand.MAIN_HAND, null);
+							ItemStack itemStackNew = CollectingRain.getWaterBucket(itemStack);
+							if (itemStackNew != null) {
+								ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
+	                            if(itemStack.stackSize != 1)
+	                                itemStack.stackSize = itemStack.stackSize - 1;
+	                            else
+	                                event.player.setHeldItem(EnumHand.MAIN_HAND, null);
+							}
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
 						}
-					} else if (event.player.getHeldItemOffhand() != null && event.player.getHeldItemOffhand().getItem() instanceof ItemBucket && event.player.getHeldItemOffhand().getItem().equals(Items.BUCKET)) {
+					} else if (CollectingRain.isSupportedBucket(event.player.getHeldItemOffhand())) {
 						if (stats.getRainAmount() >= 100) {
 							ItemStack itemStack = event.player.getHeldItemOffhand();
-							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
-							ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
-							if(itemStack.stackSize != 1)
-								itemStack.stackSize = itemStack.stackSize - 1;
-							else
-								event.player.setHeldItem(EnumHand.OFF_HAND, null);
+							ItemStack itemStackNew = CollectingRain.getWaterBucket(itemStack);
+							if (itemStackNew != null) {
+								ItemHandlerHelper.giveItemToPlayer(event.player, itemStackNew);
+	                            if(itemStack.stackSize != 1)
+	                                itemStack.stackSize = itemStack.stackSize - 1;
+	                            else
+	                                event.player.setHeldItem(EnumHand.OFF_HAND, null);
+							}
 							stats.setRainAmount(0);
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
