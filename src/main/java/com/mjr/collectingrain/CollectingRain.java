@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = CollectingRain.MODID, version = CollectingRain.VERSION, dependencies = "required-after:forge@[13.20.1.2513,); required-after:mjrlegendslib@[1.11.2-1.1.5,);", certificateFingerprint = "b02331787272ec3515ebe63ecdeea0d746653468")
 public class CollectingRain {
 	public static final String MODID = "collectingrain";
-	public static final String VERSION = "1.11.2-1.0.2";
+	public static final String VERSION = "1.11.2-1.0.3";
 
 	@SidedProxy(clientSide = "com.mjr.collectingrain.proxy.ClientProxy", serverSide = "com.mjr.collectingrain.proxy.CommonProxy")
 	public static CommonProxy proxy;
