@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v1.0.3
+*Fixed issue #3
+*Added support for Ceramics clay bucket
+
 v1.0.2
 *Tweaks to match MJRLegendsLib changes
 *Fixed issue with stacked buckets being removed
