@@ -47,7 +47,7 @@ public class MainHandlerServer {
 			if (event.player != null) {
 				stats = event.player.getCapability(CapabilityStatsHandler.STATS_CAPABILITY, null);
 				if (stats != null) {
-					if (event.player.getHeldItemMainhand().getItem() instanceof ItemBucket && !event.player.getHeldItemMainhand().getItem().equals(Items.WATER_BUCKET)) {
+					if (event.player.getHeldItemMainhand().getItem() instanceof ItemBucket && event.player.getHeldItemMainhand().getItem().equals(Items.BUCKET)) {
 						if (stats.getRainAmount() >= 100) {
 							ItemStack itemStack = event.player.getHeldItemMainhand();
 							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);
@@ -60,7 +60,7 @@ public class MainHandlerServer {
 						} else {
 							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
 						}
-					} else if (event.player.getHeldItemOffhand().getItem() instanceof ItemBucket && !event.player.getHeldItemOffhand().getItem().equals(Items.WATER_BUCKET)) {
+					} else if (event.player.getHeldItemOffhand().getItem() instanceof ItemBucket && event.player.getHeldItemOffhand().getItem().equals(Items.BUCKET)) {
 						if (stats.getRainAmount() >= 100) {
 							ItemStack itemStack = event.player.getHeldItemOffhand();
 							ItemStack itemStackNew = new ItemStack(Items.WATER_BUCKET);

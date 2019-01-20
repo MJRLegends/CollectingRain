@@ -14,6 +14,7 @@ import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBucket;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -61,9 +62,11 @@ public class MainHandlerClient {
 			if (player != null) {
 				stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.STATS_CLIENT_CAPABILITY, null);
 			}
-			if (minecraft.currentScreen == null && player.getEntityWorld().getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())
-					&& (player.getHeldItemMainhand().getItem() instanceof ItemBucket || player.getHeldItemOffhand().getItem() instanceof ItemBucket)) {
-				OverlayRainCollection.renderOverlay();
+			if (minecraft.currentScreen == null && player.getEntityWorld().getWorldInfo().isRaining() && player.getEntityWorld().canSeeSky(player.getPosition())) {
+				if (player.getHeldItemMainhand().getItem() instanceof ItemBucket && player.getHeldItemMainhand().getItem().equals(Items.BUCKET))
+					OverlayRainCollection.renderOverlay();
+				if (player.getHeldItemOffhand().getItem() instanceof ItemBucket && player.getHeldItemOffhand().getItem().equals(Items.BUCKET))
+					OverlayRainCollection.renderOverlay();
 			}
 		}
 	}
