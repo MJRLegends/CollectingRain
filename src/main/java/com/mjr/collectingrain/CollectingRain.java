@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = CollectingRain.MODID, version = CollectingRain.VERSION, dependencies = "required-after:forge@[14.23.1.2555,); required-after:mjrlegendslib@[1.12.2-1.1.8,);", certificateFingerprint = "b02331787272ec3515ebe63ecdeea0d746653468")
 public class CollectingRain {
 	public static final String MODID = "collectingrain";
-	public static final String VERSION = "1.12.2-1.0.4";
+	public static final String VERSION = "1.12.2-1.0.5";
 
 	@SidedProxy(clientSide = "com.mjr.collectingrain.proxy.ClientProxy", serverSide = "com.mjr.collectingrain.proxy.CommonProxy")
 	public static CommonProxy proxy;
@@ -74,11 +74,13 @@ public class CollectingRain {
 		if(stack.getItem().equals(Items.BUCKET))
 			return new ItemStack(Items.WATER_BUCKET);
 		if(stack.getItem().getRegistryName().toString().equalsIgnoreCase("ceramics:clay_bucket")) {
+			stack = stack.copy();
 			NBTTagCompound tags = stack.getTagCompound();
 			if(tags == null) {
 				NBTTagCompound tag = new NBTTagCompound();
 				tag.setTag("fluids", new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME).writeToNBT(new NBTTagCompound()));
 				stack.setTagCompound(tag);
+				stack.setCount(1);
 				return stack;
 			}
 		}
