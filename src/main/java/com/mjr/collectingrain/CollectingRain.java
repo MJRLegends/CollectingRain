@@ -3,9 +3,9 @@ package com.mjr.collectingrain;
 import com.mjr.collectingrain.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.collectingrain.handlers.MainHandlerServer;
 import com.mjr.collectingrain.handlers.capabilities.CapabilityStatsHandler;
-import com.mjr.collectingrain.network.ChannelHandler;
-import com.mjr.collectingrain.proxy.CommonProxy;
-import com.mjr.mjrlegendslib.util.MessageUtilities;
+import com.mjr.collectingrain.proxy.ClientProxy;
+import com.mjr.collectingrain.proxy.IProxy;
+import com.mjr.collectingrain.proxy.ServerProxy;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 
 import net.minecraft.init.Items;
@@ -14,58 +14,43 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(modid = CollectingRain.MODID, version = CollectingRain.VERSION, dependencies = "required-after:forge@[14.23.1.2555,); required-after:mjrlegendslib@[1.12.2-1.1.8,);", certificateFingerprint = "b02331787272ec3515ebe63ecdeea0d746653468")
+@Mod(CollectingRain.MODID)
 public class CollectingRain {
 	public static final String MODID = "collectingrain";
-	public static final String VERSION = "1.12.2-1.0.5";
 
-	@SidedProxy(clientSide = "com.mjr.collectingrain.proxy.ClientProxy", serverSide = "com.mjr.collectingrain.proxy.CommonProxy")
-	public static CommonProxy proxy;
+    public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
-	@Instance(MODID)
-	public static CollectingRain instance;
-
-	public static ChannelHandler packetPipeline;
-
-	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		Config.load();
+    
+    public CollectingRain() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.serverSpec);
+    }
+    
+    private void setup(final FMLCommonSetupEvent event) {
 		RegisterUtilities.registerEventHandler(new MainHandlerServer());
-		CollectingRain.proxy.preInit(event);
-	}
-
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		packetPipeline = ChannelHandler.init();
-		CollectingRain.proxy.init(event);
-	}
-
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		// Register Capability Handlers
 		CapabilityStatsHandler.register();
 		CapabilityStatsClientHandler.register();
-		CollectingRain.proxy.postInit(event);
+		//packetPipeline = ChannelHandler.init();
 	}
+	
+	//public static ChannelHandler packetPipeline;
 
-	@EventHandler
-	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
+
+/*	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
 		MessageUtilities.fatalErrorMessageToLog(MODID, "Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been tampered with. This version will NOT be supported!");
-	}
+	}*/
 	
 	public static boolean isSupportedBucket(ItemStack stack) {
 		if(stack.getItem().equals(Items.BUCKET))
 			return true;
-		if(stack.getItem().getRegistryName().toString().equalsIgnoreCase("ceramics:clay_bucket") && stack.getTagCompound() == null)
+		if(stack.getItem().getRegistryName().toString().equalsIgnoreCase("ceramics:clay_bucket") && stack.getTag() == null)
 			return true;
 		return false;		
 	}
@@ -75,11 +60,11 @@ public class CollectingRain {
 			return new ItemStack(Items.WATER_BUCKET);
 		if(stack.getItem().getRegistryName().toString().equalsIgnoreCase("ceramics:clay_bucket")) {
 			stack = stack.copy();
-			NBTTagCompound tags = stack.getTagCompound();
+			NBTTagCompound tags = stack.getTag();
 			if(tags == null) {
 				NBTTagCompound tag = new NBTTagCompound();
 				tag.setTag("fluids", new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME).writeToNBT(new NBTTagCompound()));
-				stack.setTagCompound(tag);
+				stack.setTag(tag);
 				stack.setCount(1);
 				return stack;
 			}

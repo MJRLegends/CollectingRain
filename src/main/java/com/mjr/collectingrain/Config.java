@@ -1,18 +1,28 @@
 package com.mjr.collectingrain;
 
-import java.io.File;
+import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 
 public class Config {
-	public static double mbPerTick;
 
-	public static void load() {
-		Configuration config = new Configuration(new File("config/CollectingRain.cfg"));
-		config.load();
+	static final ForgeConfigSpec serverSpec;
+	public static final Server SERVER;
 
-		mbPerTick = config.get(Configuration.CATEGORY_GENERAL, "Amount of mb gained per tick", 1.0, "Default: 1").getDouble(1.0);
+	static {
+		final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
+		serverSpec = specPair.getRight();
+		SERVER = specPair.getLeft();
+	}
 
-		config.save();
+	public static class Server {
+		public DoubleValue mbPerTick;
+
+		Server(ForgeConfigSpec.Builder builder) {
+			builder.comment("Server configuration settings").push("server");
+			mbPerTick = builder.comment("Default: 1.0").translation("config.amount_mb.per_tick").defineInRange("amountMBPerTick", 1.0, 0.0, 1000.0);
+			builder.pop();
+		}
 	}
 }

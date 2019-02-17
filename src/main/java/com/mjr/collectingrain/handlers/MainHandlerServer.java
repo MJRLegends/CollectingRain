@@ -26,7 +26,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
@@ -58,7 +58,7 @@ public class MainHandlerServer {
 							}
 							stats.setRainAmount(0);
 						} else {
-							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
+							stats.setRainAmount(stats.getRainAmount() + Config.SERVER.mbPerTick.get());
 						}
 					} else if (CollectingRain.isSupportedBucket(event.player.getHeldItemOffhand())) {
 						if (stats.getRainAmount() >= 100) {
@@ -73,7 +73,7 @@ public class MainHandlerServer {
 							}
 							stats.setRainAmount(0);
 						} else {
-							stats.setRainAmount(stats.getRainAmount() + Config.mbPerTick);
+							stats.setRainAmount(stats.getRainAmount() + Config.SERVER.mbPerTick.get());
 						}
 					}
 				}
